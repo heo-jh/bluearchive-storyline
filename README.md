@@ -30,7 +30,7 @@
 - `imp`: `3` 필수 · `2` 추천 · `1` 선택 · `0` 표시 안 함
 - `img`: 카드 그림 (`images/art/`, 480×270), `logo`: 그림 위에 얹을 이벤트 로고 (`images/logo/`)
   - `img`+`logo` → 그림 위에 로고 / `logo`만 → 하늘색 배경 위에 로고 / `img`만 → 그림만
-  - 출처: 그림은 [Schale Calendar](https://schalecalendar.com/timeline), 한글 로고는 [SchaleDB](https://schaledb.com)
+  - 출처: 그림은 [Schale Calendar](https://schalecalendar.com/timeline) (일부는 [Blue Archive Wiki](https://bluearchive.wiki)의 공식 이미지에서 외국어 로고 부분을 잘라냄), 한글 로고는 [SchaleDB](https://schaledb.com)
 - `noReplay: true`: 게임 안 스토리 다시보기에 없는 이벤트 → 카드에 "다시보기 미수록" 태그
 - `ep`: 화별 목록 키 (`episodes.js` 참고), 일부 화만 보려면 `epFrom` / `epTo`
 - 소제목은 `{ group: "소제목" }`

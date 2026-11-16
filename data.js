@@ -15,6 +15,7 @@ window.SITE = {
     url: "https://gall.dcinside.com/mgallery/board/view/?id=arona&no=10164"
   },
   changelog: [
+    { date: "2026-11-17", tag: "디자인", text: "숨겨진 유산·D.U. 시라토리구·어떤 과학의 청춘기록 카드에도 게임 그림 추가 — 이제 모든 카드에 그림이 들어감" },
     { date: "2026-11-17", tag: "디자인", text: "수토끼·오욕내강 카드에도 게임 그림 추가 (외국어 로고 부분을 잘라냄), ON YOUR MARK @ MILLENNIUM에 부제 추가" },
     { date: "2026-11-17", tag: "내용", text: "이벤트·연합 작전 제목을 한국 서버 공식 이름으로 변경 (기존 감상 체크·북마크는 자동으로 옮겨짐), 말쿠트 카드 사진 교체, 강철대륙 연계 카드는 '강철대륙 공략전 ~부제~'로 묶어 표시" },
     { date: "2026-11-17", tag: "기능", text: "카드 사진을 누르면 크게 보기 (‹ ›로 앞뒤 카드 사진 넘기기)" },
@@ -139,13 +140,13 @@ window.ROUTES = [
       { title: "Final. 그리고 모든 기적이 시작되는 곳 편", ep: ["fc1", "fc2", "fc3", "fc4"], type: "final", imp: 3, img: "images/art/fc1.jpg", notes: ["여기까지가 1부입니다."] },
       { divider: "1부 완결 · 여기부터 1부 이후", jump: "1부 이후" },
       { group: "최종편 후일담 무렵" },
-      { title: "복구 작업: D.U. 시라토리구", noReplay: true, ep: "du-shiratori", type: "event", imp: 1, logo: "images/logo/du-shiratori.webp" },
+      { title: "복구 작업: D.U. 시라토리구", noReplay: true, ep: "du-shiratori", type: "event", imp: 1, img: "images/art/du-shiratori.jpg", logo: "images/logo/du-shiratori.webp" },
       { title: "순백의 예고장 ~허식의 저택과 미학이 머무는 곳~", noReplay: true, ep: "alabaster-calling-card", type: "event", imp: 1, img: "images/art/alabaster-calling-card.jpg", logo: "images/logo/alabaster-calling-card.webp" },
       { title: "용무동주 ~마음에 그리는 것은, 하나의 미래~", noReplay: true, ep: "dragon-tortoise", type: "event", imp: 1, img: "images/art/dragon-tortoise.jpg", logo: "images/logo/dragon-tortoise.webp" },
       { group: "Vol.4 카르바노그의 토끼 편 2장", jump: "토끼 2장" },
       { title: "Vol.4 카르바노그의 토끼 편 2장", ep: "v4c2", type: "main", imp: 3, img: "images/art/v4c2.jpg" },
       { title: "여름 특수 작전! 사라진 새우를 향한 토끼의 추적", ep: "rabbit-shrimp", type: "event", imp: 2, img: "images/art/rabbit-shrimp.jpg", logo: "images/logo/rabbit-shrimp.webp", notes: ["통칭 '수토끼'", "토끼 편 2장 직후 추천 (원글)"] },
-      { title: "숨겨진 유산을 찾아서 ~트리니티 과외 활동~", ep: "hidden-heritage", type: "event", imp: 2, logo: "images/logo/hidden-heritage.webp", notes: ["백화요란 1장 전 추천 (원글)"] },
+      { title: "숨겨진 유산을 찾아서 ~트리니티 과외 활동~", ep: "hidden-heritage", type: "event", imp: 2, img: "images/art/hidden-heritage.jpg", logo: "images/logo/hidden-heritage.webp", notes: ["백화요란 1장 전 추천 (원글)"] },
       { title: "학원 동인 이야기 ~두 명이 도달한 최종회~", ep: "academy-club-story", type: "event", imp: 1, img: "images/art/academy-club-story.jpg", logo: "images/logo/academy-club-story.webp" },
       { title: "Trip-Trap-Train", ep: "trip-trap-train", type: "event", imp: 1, img: "images/art/trip-trap-train.jpg", logo: "images/logo/trip-trap-train.webp" },
       { group: "Vol.5 백화요란 편 1장" },
@@ -258,7 +259,7 @@ window.EXTRAS = {
   title: "원글 순서에 없는 이벤트",
   desc: "원글 감상 순서에는 없는 이벤트를 따로 모았어요. 순서 목록에 넣을 위치가 정해지지 않아서 진행도에는 포함되지 않아요.",
   items: [
-    { title: "어떤 과학의 청춘기록", replay: true, ep: "certain-scientific", logo: "images/logo/certain-scientific.webp", notes: ["「어떤 과학의 초전자포 T」 콜라보 이벤트"] },
+    { title: "어떤 과학의 청춘기록", replay: true, ep: "certain-scientific", img: "images/art/certain-scientific.jpg", logo: "images/logo/certain-scientific.webp", notes: ["「어떤 과학의 초전자포 T」 콜라보 이벤트"] },
     { title: "출항! 만마선 ~마코토 의장님의 화려한 피서~", replay: true, ep: "pandemonium-ship", img: "images/art/pandemonium-ship.jpg", logo: "images/logo/pandemonium-ship.webp", notes: ["게헨나 만마전 여름 이벤트, 오디세이아 해양학원 등장", "12~15화는 후일담, 16~27화는 미니게임 스토리"] }
   ]
 };
