@@ -15,6 +15,7 @@ window.SITE = {
     url: "https://gall.dcinside.com/mgallery/board/view/?id=arona&no=10164"
   },
   changelog: [
+    { date: "2026-11-17", tag: "내용", text: "데카그라마톤 3장 11화·12~21화 카드를 하나(11~21화)로 합침 — 사이에 끼워 볼 스토리가 없어서" },
     { date: "2026-11-17", tag: "디자인", text: "숨겨진 유산·D.U. 시라토리구·어떤 과학의 청춘기록 카드에도 게임 그림 추가 — 이제 모든 카드에 그림이 들어감" },
     { date: "2026-11-17", tag: "디자인", text: "수토끼·오욕내강 카드에도 게임 그림 추가 (외국어 로고 부분을 잘라냄), ON YOUR MARK @ MILLENNIUM에 부제 추가" },
     { date: "2026-11-17", tag: "내용", text: "이벤트·연합 작전 제목을 한국 서버 공식 이름으로 변경 (기존 감상 체크·북마크는 자동으로 옮겨짐), 말쿠트 카드 사진 교체, 강철대륙 연계 카드는 '강철대륙 공략전 ~부제~'로 묶어 표시" },
@@ -91,6 +92,11 @@ window.RENAMED = {
   "연합작전: 말쿠트 (24~26화)": "강철대륙 공략전 ~연합 작전: 말쿠트~ (24~26화)",
   "연합작전: 데카그라마톤 결전": "강철대륙 공략전 ~연합 작전: 데카그라마톤 결전~ (27~29화)"
 };
+
+// 카드를 하나로 합쳤을 때: 예전 카드들의 감상 체크·북마크를 합친 카드로 옮김 (count = 그 카드의 화 수)
+window.MERGED = [
+  { into: "Ex. 데카그라마톤 편 3장 합일의 하늘 (11~21화)", parts: [ { title: "Ex. 데카그라마톤 편 3장 합일의 하늘 (11화)", count: 1 }, { title: "Ex. 데카그라마톤 편 3장 합일의 하늘 (12~21화)", count: 10 } ] }
+];
 
 window.ROUTES = [
   {
@@ -188,8 +194,7 @@ window.ROUTES = [
       { title: "Ex. 데카그라마톤 편 3장 합일의 하늘 (1~10화)", ep: "dc3", epTo: 10, type: "main", imp: 3, img: "images/art/dc3.jpg" },
       { title: "강철대륙 공략전 (1~23화)", noReplay: true, ep: "steel", epTo: 23, type: "main", imp: 3, img: "images/kr-ev-steel-continent.jpg" },
       { title: "강철대륙 공략전 ~연합 작전: 말쿠트~ (24~26화)", noReplay: true, ep: "steel", epFrom: 24, epTo: 26, type: "main", imp: 3, img: "images/art/malkuth.jpg" },
-      { title: "Ex. 데카그라마톤 편 3장 합일의 하늘 (11화)", ep: "dc3", epFrom: 11, epTo: 11, type: "main", imp: 3, img: "images/art/dc3.jpg" },
-      { title: "Ex. 데카그라마톤 편 3장 합일의 하늘 (12~21화)", ep: "dc3", epFrom: 12, epTo: 21, type: "main", imp: 3, img: "images/art/dc3.jpg" },
+      { title: "Ex. 데카그라마톤 편 3장 합일의 하늘 (11~21화)", ep: "dc3", epFrom: 11, epTo: 21, type: "main", imp: 3, img: "images/art/dc3.jpg" },
       { title: "강철대륙 공략전 ~연합 작전: 데카그라마톤 결전~ (27~29화)", noReplay: true, ep: "steel", epFrom: 27, type: "main", imp: 3, img: "images/kr-ev-deca-final.jpg" },
       { title: "Ex. 데카그라마톤 편 3장 합일의 하늘 (22~26화)", ep: "dc3", epFrom: 22, type: "main", imp: 3, img: "images/art/dc3.jpg" },
       { divider: "2부", jump: "2부" },
@@ -245,8 +250,7 @@ window.ROUTES = [
       { title: "Ex. 데카그라마톤 편 3장 합일의 하늘 (1~10화)", ep: "dc3", epTo: 10, type: "main", imp: 3, img: "images/art/dc3.jpg" },
       { title: "강철대륙 공략전 (1~23화)", noReplay: true, ep: "steel", epTo: 23, type: "main", imp: 3, img: "images/kr-ev-steel-continent.jpg" },
       { title: "강철대륙 공략전 ~연합 작전: 말쿠트~ (24~26화)", noReplay: true, ep: "steel", epFrom: 24, epTo: 26, type: "main", imp: 3, img: "images/art/malkuth.jpg" },
-      { title: "Ex. 데카그라마톤 편 3장 합일의 하늘 (11화)", ep: "dc3", epFrom: 11, epTo: 11, type: "main", imp: 3, img: "images/art/dc3.jpg" },
-      { title: "Ex. 데카그라마톤 편 3장 합일의 하늘 (12~21화)", ep: "dc3", epFrom: 12, epTo: 21, type: "main", imp: 3, img: "images/art/dc3.jpg" },
+      { title: "Ex. 데카그라마톤 편 3장 합일의 하늘 (11~21화)", ep: "dc3", epFrom: 11, epTo: 21, type: "main", imp: 3, img: "images/art/dc3.jpg" },
       { title: "강철대륙 공략전 ~연합 작전: 데카그라마톤 결전~ (27~29화)", noReplay: true, ep: "steel", epFrom: 27, type: "main", imp: 3, img: "images/kr-ev-deca-final.jpg" },
       { title: "Ex. 데카그라마톤 편 3장 합일의 하늘 (22~26화)", ep: "dc3", epFrom: 22, type: "main", imp: 3, img: "images/art/dc3.jpg" },
     ]
