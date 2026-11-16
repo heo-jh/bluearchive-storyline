@@ -263,7 +263,20 @@ footer{margin-top:40px;font-size:13px;color:var(--muted);border-top:1px solid va
   };
   function alertless(msg){ $("progText").textContent = msg; }
 
+  // 바로가기: 주소(#j-..)를 바꾸지 않고 스크롤만 → 새로고침해도 그 위치로 튀지 않음
+  $("jumpList").addEventListener("click", e => {
+    const a = e.target.closest("a.jump"); if (!a) return;
+    e.preventDefault();
+    const el = document.querySelector(a.getAttribute("href"));
+    if (el) el.scrollIntoView({behavior:"smooth", block:"start"});
+  });
+
+  // 새로고침 시 항상 맨 위에서 시작 (예전에 남은 #j-.. 주소도 정리)
+  if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+  if (location.hash) history.replaceState(null, "", location.pathname + location.search);
+
   render();
+  window.scrollTo(0, 0);
 })();
 </script>
 </body>
