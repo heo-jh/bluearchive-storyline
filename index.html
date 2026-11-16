@@ -96,6 +96,20 @@ html{scroll-behavior:smooth}
 .thumb.art .bg{width:100%;height:100%;object-fit:cover;display:block}
 .thumb.art .lg{position:absolute;left:5%;bottom:5%;width:90%;height:72%;object-fit:contain;object-position:center bottom;filter:drop-shadow(0 1px 2px rgba(0,0,0,.55))}
 .thumb{flex:0 0 auto;display:block;width:168px;aspect-ratio:16/9;object-fit:cover;border-radius:6px;background:var(--bg2)}
+.card .thumb,.xcard .thumb{cursor:zoom-in;transition:transform .15s,box-shadow .15s}
+.card .thumb:hover,.xcard .thumb:hover{transform:scale(1.03);box-shadow:0 4px 14px rgba(0,0,0,.35)}
+/* 사진 확대 창 */
+.lb{position:fixed;inset:0;z-index:50;display:grid;place-items:center;padding:16px;background:rgba(3,10,25,.72);backdrop-filter:blur(3px)}
+.lb[hidden]{display:none}
+.lb-box{width:min(560px,100%);background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px 14px;box-shadow:0 12px 40px rgba(0,0,0,.45);animation:lbIn .15s ease-out}
+@keyframes lbIn{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}
+.lb-head{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.lb-title{flex:1;min-width:0;font-weight:700;font-size:15px;line-height:1.35}
+.lb-x{flex:0 0 auto;width:30px;height:30px;border-radius:8px;border:1px solid var(--line);background:var(--bg2);color:var(--text);cursor:pointer;font-size:16px}
+.lb-stage .thumb{width:100%;border-radius:8px;cursor:default;transform:none!important;box-shadow:none!important}
+.lb-nav{display:flex;align-items:center;justify-content:space-between;margin-top:10px;font-size:13px;color:var(--muted)}
+.lb-nav button{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:var(--bg2);color:var(--text);cursor:pointer;font-size:16px}
+.lb-nav button:disabled{opacity:.35;cursor:default}
 .ttl{font-weight:600;font-size:15px;line-height:1.35}
 .tags{margin-top:3px;display:flex;gap:6px;flex-wrap:wrap;align-items:center;font-size:12px;line-height:1.4}
 .t-main{background:#2a5bd7;color:#fff}.t-event{background:#8a4bd6;color:#fff}.t-final{background:var(--accent);color:#fff}.t-todo{background:var(--gray);color:#fff}
@@ -196,9 +210,18 @@ footer{margin-top:40px;font-size:13px;color:var(--muted);border-top:1px solid va
   </footer>
 </div>
 
+<!-- 사진 확대 창 -->
+<div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-labelledby="lbTitle">
+  <div class="lb-box">
+    <div class="lb-head"><div class="lb-title" id="lbTitle"></div><button class="lb-x" id="lbClose" aria-label="닫기">✕</button></div>
+    <div class="lb-stage" id="lbStage"></div>
+    <div class="lb-nav"><button id="lbPrev" aria-label="이전 사진">‹</button><span id="lbCount"></span><button id="lbNext" aria-label="다음 사진">›</button></div>
+  </div>
+</div>
+
 <!-- ?v= 를 바꾸면 브라우저가 예전 파일을 쓰지 않고 새로 받음 (데이터 바꿀 때 같이 올려 주세요) -->
-<script src="episodes.js?v=20261117c"></script>
-<script src="data.js?v=20261117c"></script>
+<script src="episodes.js?v=20261117d"></script>
+<script src="data.js?v=20261117d"></script>
 <script>
 (() => {
   const $ = id => document.getElementById(id);
@@ -405,6 +428,35 @@ footer{margin-top:40px;font-size:13px;color:var(--muted);border-top:1px solid va
     e.preventDefault();
     const el = document.querySelector(a.getAttribute("href"));
     if (el) el.scrollIntoView({behavior:"smooth", block:"start"});
+  });
+
+  // 사진 확대: 카드 사진을 누르면 크게 보기, ‹ › (또는 ← →)로 지금 화면의 앞뒤 카드 사진 넘기기, Esc·바깥 클릭으로 닫기
+  let lbList = [], lbIdx = 0;
+  function lbShow(i){
+    lbIdx = i;
+    const th = lbList[i], box = th.closest(".card, .xcard");
+    $("lbTitle").textContent = box ? box.querySelector(".ttl").textContent : "";
+    const big = th.cloneNode(true); big.removeAttribute("loading"); big.querySelectorAll("img").forEach(im => im.removeAttribute("loading"));
+    $("lbStage").replaceChildren(big);
+    $("lbCount").textContent = `${i + 1} / ${lbList.length}`;
+    $("lbPrev").disabled = i === 0; $("lbNext").disabled = i === lbList.length - 1;
+  }
+  function lbClose(){ $("lb").hidden = true; document.body.style.overflow = ""; }
+  document.addEventListener("click", e => {
+    const th = e.target.closest(".card .thumb, .xcard .thumb"); if (!th) return;
+    lbList = [...document.querySelectorAll(".card .thumb, .xcard .thumb")];
+    $("lb").hidden = false; document.body.style.overflow = "hidden";
+    lbShow(lbList.indexOf(th)); $("lbClose").focus();
+  });
+  $("lbClose").onclick = lbClose;
+  $("lb").addEventListener("click", e => { if (e.target === $("lb")) lbClose(); });
+  $("lbPrev").onclick = () => { if (lbIdx > 0) lbShow(lbIdx - 1); };
+  $("lbNext").onclick = () => { if (lbIdx < lbList.length - 1) lbShow(lbIdx + 1); };
+  document.addEventListener("keydown", e => {
+    if ($("lb").hidden) return;
+    if (e.key === "Escape") lbClose();
+    else if (e.key === "ArrowLeft") $("lbPrev").click();
+    else if (e.key === "ArrowRight") $("lbNext").click();
   });
 
   // 새로고침 시 항상 맨 위에서 시작 (예전에 남은 #j-.. 주소도 정리)
