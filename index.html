@@ -94,8 +94,8 @@ html{scroll-behavior:smooth}
 .thumb.logo img{max-width:90%;max-height:82%;object-fit:contain}
 .thumb.art{position:relative;overflow:hidden}
 .thumb.art .bg{width:100%;height:100%;object-fit:cover;display:block}
-.thumb.art .lg{position:absolute;left:6%;right:6%;bottom:6%;width:88%;height:62%;object-fit:contain;object-position:center bottom;filter:drop-shadow(0 1px 2px rgba(0,0,0,.55))}
-.thumb{flex:0 0 auto;display:block;width:112px;aspect-ratio:16/9;object-fit:cover;border-radius:6px;background:var(--bg2)}
+.thumb.art .lg{position:absolute;left:5%;bottom:5%;width:90%;height:72%;object-fit:contain;object-position:center bottom;filter:drop-shadow(0 1px 2px rgba(0,0,0,.55))}
+.thumb{flex:0 0 auto;display:block;width:168px;aspect-ratio:16/9;object-fit:cover;border-radius:6px;background:var(--bg2)}
 .ttl{font-weight:600;font-size:15px;line-height:1.35}
 .tags{margin-top:3px;display:flex;gap:6px;flex-wrap:wrap;align-items:center;font-size:12px;line-height:1.4}
 .t-main{background:#2a5bd7;color:#fff}.t-event{background:#8a4bd6;color:#fff}.t-final{background:var(--accent);color:#fff}.t-todo{background:var(--gray);color:#fff}
@@ -129,14 +129,14 @@ html{scroll-behavior:smooth}
 @media (min-width:700px){.extras{grid-template-columns:1fr 1fr}}
 .xcard{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
 .xhead{display:flex;gap:12px;align-items:center}
-.xhead .thumb{width:96px}
+.xhead .thumb{width:168px}
 .xbadge{display:inline-block;font-size:11px;font-weight:700;padding:1px 8px;border-radius:4px;border:1px solid var(--accent);color:var(--accent);margin-bottom:4px}
 .xbadge.no{border-color:var(--gray);color:var(--muted)}
 .xcard .notes{margin-top:8px}
 .refs a{display:block;padding:8px 0;border-bottom:1px solid var(--line);text-decoration:none}
 .refs a:last-child{border:none}
 footer{margin-top:40px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
-@media (max-width:600px){.theme-btn{top:16px}header{padding-top:56px}.thumb{width:84px}.num{min-width:18px;font-size:13px}.card{gap:8px}.ttl{font-size:14px}}
+@media (max-width:600px){.theme-btn{top:16px}header{padding-top:56px}.thumb{width:124px}.num{min-width:18px;font-size:13px}.card{gap:8px}.ttl{font-size:14px}}
 </style>
 </head>
 <body>
@@ -196,8 +196,9 @@ footer{margin-top:40px;font-size:13px;color:var(--muted);border-top:1px solid va
   </footer>
 </div>
 
-<script src="episodes.js"></script>
-<script src="data.js"></script>
+<!-- ?v= 를 바꾸면 브라우저가 예전 파일을 쓰지 않고 새로 받음 (데이터 바꿀 때 같이 올려 주세요) -->
+<script src="episodes.js?v=20261117c"></script>
+<script src="data.js?v=20261117c"></script>
 <script>
 (() => {
   const $ = id => document.getElementById(id);
@@ -234,7 +235,9 @@ footer{margin-top:40px;font-size:13px;color:var(--muted);border-top:1px solid va
   const pad = n => String(n).padStart(2, "0");
   const esc = t => t.replace(/&/g, "&amp;").replace(/</g, "&lt;");
   // 북마크: 화 제목을 누르면 "여기까지 감상" (제목별로 저장, 모든 탭에서 공유)
-  let epMark = store.get("ba-epmark", {});   // key: title → 목록 안에서 몇 번째 화까지 봤는지 (1부터)
+  // 북마크는 사이트 전체에서 하나만 (가장 최근에 누른 것)
+  let epMark = store.get("ba-epmark", {});   // { title: 목록 안에서 몇 번째 화까지 봤는지 (1부터) } — 항목은 최대 1개
+  { const ks = Object.keys(epMark); if (ks.length > 1) { const k = ks[ks.length - 1]; epMark = { [k]: epMark[k] }; store.set("ba-epmark", epMark); } }
   function epHtml(it, key){
     if (!it.ep) return "";
     const chs = (Array.isArray(it.ep) ? it.ep : [it.ep]).map(k => EP[k]).filter(Boolean);
@@ -336,14 +339,14 @@ footer{margin-top:40px;font-size:13px;color:var(--muted);border-top:1px solid va
     if (d.open) openEps.add(d.dataset.k); else openEps.delete(d.dataset.k);
   }, true);
 
-  // 화 제목 클릭 → 여기까지 감상 (같은 화를 다시 누르면 해제, 마지막 화면 카드도 체크)
+  // 화 제목 클릭 → 여기까지 감상 (북마크는 하나만, 같은 화를 다시 누르면 해제, 마지막 화면 카드도 체크)
   document.addEventListener("click", e => {
     const li = e.target.closest(".ep-list li[data-p]"); if (!li) return;
     const d = li.closest("details.eps");
     const t = decodeURIComponent(d.dataset.t), p = +li.dataset.p, total = +d.dataset.total;
     if (epMark[t] === p) delete epMark[t];
     else {
-      epMark[t] = p;
+      epMark = { [t]: p };   // 다른 카드의 북마크는 지우고 이것만 남김
       if (p === total && !watched[t]) { watched[t] = true; store.set("ba-watched", watched); }
     }
     store.set("ba-epmark", epMark); render();
