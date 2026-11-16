@@ -81,6 +81,9 @@ html{scroll-behavior:smooth}
 .body{flex:1;min-width:0}
 .thumb.logo{display:grid;place-items:center;background:linear-gradient(135deg,#eef8ff,#bfe2fb);border:1px solid color-mix(in srgb,#7fc4f5 40%,transparent)}
 .thumb.logo img{max-width:90%;max-height:82%;object-fit:contain}
+.thumb.art{position:relative;overflow:hidden}
+.thumb.art .bg{width:100%;height:100%;object-fit:cover;display:block}
+.thumb.art .lg{position:absolute;left:6%;right:6%;bottom:6%;width:88%;height:62%;object-fit:contain;object-position:center bottom;filter:drop-shadow(0 1px 2px rgba(0,0,0,.55))}
 .thumb{flex:0 0 auto;display:block;width:112px;aspect-ratio:16/9;object-fit:cover;border-radius:6px;background:var(--bg2)}
 .ttl{font-weight:600;font-size:15px;line-height:1.35}
 .tags{margin-top:3px;display:flex;gap:6px;flex-wrap:wrap;align-items:center;font-size:12px;line-height:1.4}
@@ -235,9 +238,13 @@ footer{margin-top:40px;font-size:13px;color:var(--muted);border-top:1px solid va
   $("tabs").innerHTML = R.map(r => `<button class="tab" data-r="${r.id}">${r.short}</button>`).join("");
   $("tabs").onclick = e => { const r = e.target.dataset.r; if (!r) return; routeId = r; store.set("ba-route", r); render(); };
 
-  const thumb = it => !it.img ? "" : it.logo
-    ? `<span class="thumb logo"><img src="${it.img}" alt="" loading="lazy" onerror="this.parentNode.remove()"></span>`
-    : `<img class="thumb" src="${it.img}" alt="" loading="lazy" onerror="this.remove()">`;
+  // 카드 썸네일: 그림+로고 / 로고만(하늘색 배경) / 그림만
+  const thumb = it => {
+    if (it.img && it.logo) return `<span class="thumb art"><img class="bg" src="${it.img}" alt="" loading="lazy"><img class="lg" src="${it.logo}" alt="" loading="lazy" onerror="this.remove()"></span>`;
+    if (it.logo) return `<span class="thumb logo"><img src="${it.logo}" alt="" loading="lazy" onerror="this.parentNode.remove()"></span>`;
+    if (it.img) return `<img class="thumb" src="${it.img}" alt="" loading="lazy" onerror="this.remove()">`;
+    return "";
+  };
   const typeLabel = { main:"메인", event:"이벤트", final:"최종편", todo:"작성 필요" };
   const stars = n => n ? `<span class="stars s${n}">${"★".repeat(n)}</span>` : "";
   const pass = it => {
