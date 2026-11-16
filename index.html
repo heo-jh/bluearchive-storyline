@@ -64,6 +64,7 @@ details summary{cursor:pointer;color:var(--muted);font-size:14px}
 .card.flash{border-color:var(--yellow);box-shadow:0 0 0 3px color-mix(in srgb,var(--yellow) 30%,transparent)}
 .num{font-weight:800;color:var(--accent);min-width:26px;font-size:15px}
 .body{flex:1;min-width:0}
+.thumb{display:block;width:100%;max-width:360px;aspect-ratio:16/9;object-fit:cover;border-radius:8px;margin-bottom:8px;background:var(--bg2)}
 .ttl{font-weight:600}
 .tags{margin-top:4px;display:flex;gap:6px;flex-wrap:wrap;align-items:center;font-size:12px}
 .t-main{background:#2a5bd7;color:#fff}.t-event{background:#8a4bd6;color:#fff}.t-final{background:var(--accent);color:#fff}.t-todo{background:var(--gray);color:#fff}
@@ -198,6 +199,7 @@ footer{margin-top:40px;font-size:13px;color:var(--muted);border-top:1px solid va
       html += `<div class="card ${it.type} ${done?"done":""}" id="c-${i}">
         ${it.type === "todo" ? `<span class="num">…</span>` : `<span class="num">${String(n).padStart(2,"0")}</span>`}
         <div class="body">
+          ${it.img ? `<img class="thumb" src="${it.img}" alt="" loading="lazy" onerror="this.remove()">` : ""}
           <div class="ttl">${it.title}</div>
           <div class="tags"><span class="tag t-${it.type}">${typeLabel[it.type]}</span>${stars(it.imp)}</div>
           ${notes}
