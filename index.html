@@ -59,6 +59,7 @@ html{scroll-behavior:smooth}
 .jumps-label{flex:0 0 auto;font-size:12px;font-weight:700;color:var(--muted)}
 .jumps-list{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;min-width:0}
 .jumps-list::-webkit-scrollbar{display:none}
+@media (min-width:700px){.jumps-list{flex-wrap:wrap;overflow:visible}}
 .jump{flex:0 0 auto;padding:4px 10px;font-size:13px;font-weight:600;white-space:nowrap;color:var(--accent);text-decoration:none;background:color-mix(in srgb,var(--accent) 10%,transparent);border:1px solid color-mix(in srgb,var(--accent) 55%,transparent);border-radius:6px}
 .jump:hover{background:color-mix(in srgb,var(--accent) 22%,transparent);border-color:var(--accent)}
 .group,.divider,.anchor{scroll-margin-top:64px}
