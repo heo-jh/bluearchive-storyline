@@ -204,7 +204,7 @@ footer{margin-top:40px;font-size:13px;color:var(--muted);border-top:1px solid va
       const range = from === 1 && to === c.eps.length ? `${c.eps.length}화` : from === to ? `${from}화` : `${from}~${to}화`;
       return { c, range, html: `<ol class="ep-list">${c.eps.slice(from - 1, to).map((t, j) => `<li><b>${pad(from + j)}</b>${esc(t)}</li>`).join("")}</ol>` };
     });
-    const label = chs.length > 1 ? `화별 목록 · ${chs.length}개 장, 총 ${total}화` : `화별 목록 · ${lists[0].c.name} (${lists[0].range})`;
+    const label = chs.length > 1 ? `화별 목록 · ${chs.length}개 장, 총 ${total}화` : (lists[0].c.name ? `화별 목록 · ${lists[0].c.name} (${lists[0].range})` : `화별 목록 (${lists[0].range})`);
     const body = chs.length > 1 ? lists.map(l => `<div class="ep-ch">${l.c.name} <span style="font-weight:400;color:var(--muted)">(${l.range})</span></div>${l.html}`).join("") : lists[0].html;
     return `<details class="eps" data-k="${key}"${openEps.has(key) ? " open" : ""}><summary>${label}</summary>${body}</details>`;
   }
