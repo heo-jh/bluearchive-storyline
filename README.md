@@ -1,0 +1,29 @@
+# 블루 아카이브 스토리 순서 가이드
+
+스토리 뉴비를 위한 블루 아카이브 스토리 연표·감상 순서 페이지입니다. (비공식 팬 가이드)
+
+원글: [블루 아카이브 마이너 갤러리 — 스토리 뉴비들을 위한 스토리연표 및 스토리순서](https://gall.dcinside.com/mgallery/board/view/?id=arona&no=10164)
+
+## 기능
+- 5가지 감상 루트 탭 (메인만 / 이벤트 포함 / 1부 이후 / 데카그라마톤 / 2부 프롤로그)
+- 중요도 별표 (★★★ 필수 / ★★ 추천 / ★ 선택)
+- 감상 체크 + 진행도 바 + "이어보기" 버튼 (브라우저에 저장)
+- 필터 (안 본 것 / 필수급 / 메인 / 이벤트)
+- 다크·라이트 테마
+
+## GitHub Pages로 올리는 법
+1. GitHub에서 새 저장소 만들기 (예: `bluearchive-storyline`, Public)
+2. **Add file → Upload files** 로 `index.html`, `data.js`, `README.md` 업로드 → Commit
+3. **Settings → Pages → Branch: `main` / `(root)`** 선택 후 Save
+4. 1~2분 뒤 `https://<내아이디>.github.io/bluearchive-storyline/` 에서 확인
+
+## 내용 수정
+스토리 목록은 전부 `data.js`에 있습니다. 항목 하나는 이렇게 생겼어요:
+
+```js
+{ title: "Vol.1 대책위원회 편 1장", type: "main", imp: 3, notes: ["메모"] }
+```
+
+- `type`: `main` 메인 · `event` 이벤트 · `final` 최종편 · `todo` 작성 필요
+- `imp`: `3` 필수 · `2` 추천 · `1` 선택 · `0` 표시 안 함
+- 소제목은 `{ group: "소제목" }`
