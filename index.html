@@ -83,6 +83,7 @@ html{scroll-behavior:smooth}
 .ttl{font-weight:600;font-size:15px;line-height:1.35}
 .tags{margin-top:3px;display:flex;gap:6px;flex-wrap:wrap;align-items:center;font-size:12px;line-height:1.4}
 .t-main{background:#2a5bd7;color:#fff}.t-event{background:#8a4bd6;color:#fff}.t-final{background:var(--accent);color:#fff}.t-todo{background:var(--gray);color:#fff}
+.t-noreplay{background:transparent;border:1px solid var(--gray);color:var(--muted)}
 .stars{font-size:13px;letter-spacing:1px}
 .notes{margin:3px 0 0;padding-left:16px;font-size:12.5px;line-height:1.45;color:var(--muted)}
 .eps{margin-top:4px;font-size:12.5px}
@@ -255,7 +256,7 @@ footer{margin-top:40px;font-size:13px;color:var(--muted);border-top:1px solid va
         ${it.img ? `<img class="thumb" src="${it.img}" alt="" loading="lazy" onerror="this.remove()">` : ""}
         <div class="body">
           <div class="ttl">${it.title}</div>
-          <div class="tags"><span class="tag t-${it.type}">${typeLabel[it.type]}</span>${stars(it.imp)}</div>
+          <div class="tags"><span class="tag t-${it.type}">${typeLabel[it.type]}</span>${stars(it.imp)}${it.noReplay ? `<span class="tag t-noreplay" title="게임 안 스토리 다시보기 메뉴에 없음">다시보기 미수록</span>` : ""}</div>
           ${notes}
           ${epHtml(it, routeId + ":" + i)}
         </div>
