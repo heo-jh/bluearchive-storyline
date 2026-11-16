@@ -85,6 +85,14 @@ html{scroll-behavior:smooth}
 .t-main{background:#2a5bd7;color:#fff}.t-event{background:#8a4bd6;color:#fff}.t-final{background:var(--accent);color:#fff}.t-todo{background:var(--gray);color:#fff}
 .stars{font-size:13px;letter-spacing:1px}
 .notes{margin:3px 0 0;padding-left:16px;font-size:12.5px;line-height:1.45;color:var(--muted)}
+.eps{margin-top:4px;font-size:12.5px}
+.eps summary{display:inline-block;color:var(--accent2);cursor:pointer;font-weight:600;list-style:none;user-select:none}
+.eps summary::-webkit-details-marker{display:none}
+.eps summary::before{content:"▸ ";display:inline-block;transition:transform .15s}
+.eps[open] summary::before{transform:rotate(90deg)}
+.ep-ch{margin:8px 0 2px;font-weight:700;color:var(--text)}
+.ep-list{list-style:none;margin:4px 0 2px;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:2px 14px;color:var(--muted);line-height:1.45}
+.ep-list b{display:inline-block;min-width:22px;color:var(--accent);font-weight:700;font-variant-numeric:tabular-nums}
 .chk{appearance:none;width:22px;height:22px;border:2px solid var(--line);border-radius:6px;cursor:pointer;flex:0 0 auto;display:grid;place-content:center}
 .chk:checked{background:var(--done);border-color:var(--done)}
 .chk:checked::after{content:"✓";color:#fff;font-size:14px;font-weight:700}
@@ -148,6 +156,7 @@ footer{margin-top:40px;font-size:13px;color:var(--muted);border-top:1px solid va
   </footer>
 </div>
 
+<script src="episodes.js"></script>
 <script src="data.js"></script>
 <script>
 (() => {
@@ -177,6 +186,28 @@ footer{margin-top:40px;font-size:13px;color:var(--muted);border-top:1px solid va
   if (!R.find(r => r.id === routeId)) routeId = R[0].id;
   let watched = store.get("ba-watched", {});   // key: title → true (공유: 같은 제목은 모든 루트에서 체크)
   let filter = "all";
+  Object.keys(watched).forEach(k => { if (k.includes("합장의 하늘")) { watched[k.replace("합장의 하늘", "합일의 하늘")] = true; delete watched[k]; store.set("ba-watched", watched); } });
+
+  // 화별 목록 (episodes.js)
+  const EP = window.EPISODES || {};
+  const openEps = new Set();   // 다시 그려도 펼친 목록 유지
+  const pad = n => String(n).padStart(2, "0");
+  const esc = t => t.replace(/&/g, "&amp;").replace(/</g, "&lt;");
+  function epHtml(it, key){
+    if (!it.ep) return "";
+    const chs = (Array.isArray(it.ep) ? it.ep : [it.ep]).map(k => EP[k]).filter(Boolean);
+    if (!chs.length) return "";
+    let total = 0;
+    const lists = chs.map(c => {
+      const from = it.epFrom || 1, to = Math.min(it.epTo || c.eps.length, c.eps.length);
+      total += to - from + 1;
+      const range = from === 1 && to === c.eps.length ? `${c.eps.length}화` : from === to ? `${from}화` : `${from}~${to}화`;
+      return { c, range, html: `<ol class="ep-list">${c.eps.slice(from - 1, to).map((t, j) => `<li><b>${pad(from + j)}</b>${esc(t)}</li>`).join("")}</ol>` };
+    });
+    const label = chs.length > 1 ? `화별 목록 · ${chs.length}개 장, 총 ${total}화` : `화별 목록 · ${lists[0].c.name} (${lists[0].range})`;
+    const body = chs.length > 1 ? lists.map(l => `<div class="ep-ch">${l.c.name} <span style="font-weight:400;color:var(--muted)">(${l.range})</span></div>${l.html}`).join("") : lists[0].html;
+    return `<details class="eps" data-k="${key}"${openEps.has(key) ? " open" : ""}><summary>${label}</summary>${body}</details>`;
+  }
 
   const FILTERS = [
     ["all","전체"],["unwatched","안 본 것"],["imp3","필수급만"],["main","메인"],["event","이벤트"]
@@ -226,6 +257,7 @@ footer{margin-top:40px;font-size:13px;color:var(--muted);border-top:1px solid va
           <div class="ttl">${it.title}</div>
           <div class="tags"><span class="tag t-${it.type}">${typeLabel[it.type]}</span>${stars(it.imp)}</div>
           ${notes}
+          ${epHtml(it, routeId + ":" + i)}
         </div>
         ${it.type === "todo" ? "" : `<input type="checkbox" class="chk" data-t="${encodeURIComponent(it.title)}" ${done?"checked":""} aria-label="봤어요">`}
       </div>`;
@@ -240,6 +272,11 @@ footer{margin-top:40px;font-size:13px;color:var(--muted);border-top:1px solid va
     $("barFill").style.width = (real.length ? cnt / real.length * 100 : 0) + "%";
     $("progText").textContent = `${cnt} / ${real.length} 감상`;
   }
+
+  $("timeline").addEventListener("toggle", e => {
+    const d = e.target; if (!d.classList || !d.classList.contains("eps")) return;
+    if (d.open) openEps.add(d.dataset.k); else openEps.delete(d.dataset.k);
+  }, true);
 
   $("timeline").addEventListener("change", e => {
     if (!e.target.classList.contains("chk")) return;
