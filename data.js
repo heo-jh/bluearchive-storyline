@@ -15,6 +15,7 @@ window.SITE = {
     url: "https://gall.dcinside.com/mgallery/board/view/?id=arona&no=10164"
   },
   changelog: [
+    { date: "2026-11-16", tag: "기능", text: "메인+이벤트 통합 순서 탭 추가 (기본 탭)" },
     { date: "2026-11-16", tag: "기능", text: "사이트 최초 공개 — 원글 섹션 1·2 반영, 섹션 3~5 틀 마련" }
   ],
   notice: [
@@ -26,6 +27,45 @@ window.SITE = {
 };
 
 window.ROUTES = [
+  {
+    id: "all1",
+    name: "⭐ 통합 순서 (메인+이벤트, 1부 최종장까지)",
+    short: "⭐ 통합 순서",
+    desc: "메인과 이벤트를 한 줄로 이어 본 순서입니다. 메인 순서·중요도는 원글, 이벤트 위치는 Gamerch 위키의 '추천 감상 시점'을 참고했어요. 이벤트는 대부분 1부 최종편 전에만 보면 되니, 순서를 너무 엄격하게 지킬 필요는 없어요.",
+    items: [
+      { group: "Vol.1 대책위원회 편" },
+      { title: "Vol.1 대책위원회 편 1장", type: "main", imp: 3 },
+      { title: "Vol.1 대책위원회 편 2장", type: "main", imp: 3 },
+      { title: "신춘광상곡 제68번", type: "event", imp: 2, notes: ["대책위원회 2장 이후"] },
+      { group: "Vol.2 시계태엽 꽃의 파반느 편 1장" },
+      { title: "Vol.2 시계태엽 꽃의 파반느 편 1장", type: "main", imp: 3 },
+      { title: "선상의 바니 체이서", type: "event", imp: 3, notes: ["파반느 1장 이후", "메인과 직결되는 필수급 이벤트"] },
+      { group: "Vol.3 에덴조약 편" },
+      { title: "Vol.3 에덴조약 편 1장", type: "main", imp: 3, notes: ["에덴조약 1~4장은 몰아서 봐도 순서상 문제 없음"] },
+      { title: "Vol.3 에덴조약 편 2장", type: "main", imp: 3 },
+      { title: "여름 하늘의 위시리스트", type: "event", imp: 1, notes: ["에덴조약 2장 이후"] },
+      { title: "히나 위원장의 여름방학!", type: "event", imp: 1, notes: ["에덴조약 2장 이후"] },
+      { title: "Vol.3 에덴조약 편 3장", type: "main", imp: 3 },
+      { title: "우당탕탕 수녀와 고서관의 마술사", type: "event", imp: 1, notes: ["에덴조약 3장 이후"] },
+      { title: "샬레의 해피 발렌타인 순찰", type: "event", imp: 1, notes: ["RABBIT 소대 편 1장 전", "난이도가 부담되면 건너뛰어도 됨"] },
+      { title: "RABBIT 소대 편 1장", type: "main", imp: 3 },
+      { title: "Vol.3 에덴조약 편 4장", type: "main", imp: 3 },
+      { title: "Vol.2 시계태엽 꽃의 파반느 편 2장", type: "main", imp: 3 },
+      { group: "최종편 전에 보기" },
+      { title: "벚꽃만발 축제대소동", type: "event", imp: 2 },
+      { title: "혁명의 이반 쿠팔라", type: "event", imp: 2 },
+      { title: "227호 온천장 운영일지", type: "event", imp: 2, notes: ["이반 쿠팔라 다음에"] },
+      { title: "네버랜드에서 붙잡아줘", type: "event", imp: 1 },
+      { title: "달콤한 비밀: 총격전", type: "event", imp: 2 },
+      { title: "불인(不忍)의 마음", type: "event", imp: 3, notes: ["메인과 직결되는 필수급 이벤트"] },
+      { title: "아비도스 리조트 복구대책위원회", type: "event", imp: 2 },
+      { title: "출장! 백야당 바다의 집 프랜차이즈 계획", type: "event", imp: 2, notes: ["아비도스 리조트 다음에"] },
+      { title: "Get Set, Go! 키보토스 황륜대제", type: "event", imp: 2 },
+      { title: "코사카 와카모의 침묵과 축연", type: "event", imp: 1, notes: ["난이도가 부담되면 건너뛰어도 됨"] },
+      { group: "1부 최종장" },
+      { title: "최종편 (1부 최종장)", type: "final", imp: 3, notes: ["여기까지가 1부입니다."] }
+    ]
+  },
   {
     id: "main1",
     name: "① 메인만 (1부 최종장까지)",
@@ -105,6 +145,7 @@ window.ROUTES = [
 ];
 
 window.REFERENCES = [
+  { title: "Gamerch 블루 아카이브 위키 — 이벤트 스토리 추천 감상 시점 (일본어)", url: "https://gamerch.com/bluearchive/648183" },
   { title: "프로젝트MX 갤러리 — 뉴비용 스토리 순서 가이드", url: "https://gall.dcinside.com/mgallery/board/view/?id=projectmx&no=10529978" },
   { title: "note.com (dapper_worm1069) — 읽는 순서·공개 순서 정리 (일섭 스포 주의)", url: "https://note.com/dapper_worm1069" },
   { title: "kamigame.jp — 블루 아카이브 추천 스토리 순서·공개 순서 (일섭 스포 주의)", url: "https://kamigame.jp/" }
