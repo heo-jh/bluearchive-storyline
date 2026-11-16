@@ -220,8 +220,8 @@ footer{margin-top:40px;font-size:13px;color:var(--muted);border-top:1px solid va
 </div>
 
 <!-- ?v= 를 바꾸면 브라우저가 예전 파일을 쓰지 않고 새로 받음 (데이터 바꿀 때 같이 올려 주세요) -->
-<script src="episodes.js?v=20261117d"></script>
-<script src="data.js?v=20261117d"></script>
+<script src="episodes.js?v=20261117f"></script>
+<script src="data.js?v=20261117f"></script>
 <script>
 (() => {
   const $ = id => document.getElementById(id);
@@ -261,6 +261,13 @@ footer{margin-top:40px;font-size:13px;color:var(--muted);border-top:1px solid va
   // 북마크는 사이트 전체에서 하나만 (가장 최근에 누른 것)
   let epMark = store.get("ba-epmark", {});   // { title: 목록 안에서 몇 번째 화까지 봤는지 (1부터) } — 항목은 최대 1개
   { const ks = Object.keys(epMark); if (ks.length > 1) { const k = ks[ks.length - 1]; epMark = { [k]: epMark[k] }; store.set("ba-epmark", epMark); } }
+  // 제목을 바꾼 카드: 예전 제목으로 저장된 감상 체크·북마크를 새 제목으로 옮김 (data.js의 RENAMED)
+  { let moved = false;
+    Object.entries(window.RENAMED || {}).forEach(([from, to]) => {
+      if (watched[from]) { watched[to] = true; delete watched[from]; moved = true; }
+      if (epMark[from]) { epMark = { [to]: epMark[from] }; moved = true; }
+    });
+    if (moved) { store.set("ba-watched", watched); store.set("ba-epmark", epMark); } }
   function epHtml(it, key){
     if (!it.ep) return "";
     const chs = (Array.isArray(it.ep) ? it.ep : [it.ep]).map(k => EP[k]).filter(Boolean);
