@@ -15,6 +15,8 @@ window.SITE = {
     url: "https://gall.dcinside.com/mgallery/board/view/?id=arona&no=10164"
   },
   changelog: [
+    { date: "2026-11-16", tag: "기능", text: "통합 순서를 처음~2부 한 탭으로 합침, 이벤트 전용 탭 삭제" },
+    { date: "2026-11-16", tag: "내용", text: "227호 온천장 → 발렌타인 순찰 → 와카모 순으로 조정" },
     { date: "2026-11-16", tag: "내용", text: "③ 메인 이후·④ 데카그라마톤을 원글 이미지대로 교체, 1부 이후 통합 순서에 이벤트 추가" },
     { date: "2026-11-16", tag: "내용", text: "1부 통합 순서를 원글 이미지 순서 그대로 교체" },
     { date: "2026-11-16", tag: "기능", text: "1부 최종장 이후 ~ 2부 통합 순서 탭 추가" },
@@ -33,10 +35,11 @@ window.SITE = {
 window.ROUTES = [
   {
     id: "all1",
-    name: "⭐ 통합 순서 (메인+이벤트, 1부 최종장까지)",
+    name: "⭐ 통합 순서 (메인+이벤트, 처음부터 2부까지)",
     short: "⭐ 통합 순서",
-    desc: "원글 이미지의 순서를 그대로 옮긴 메인+이벤트 통합 순서입니다. 빨간별(★★★)은 메인과 직결되는 필수급 이벤트예요.",
+    desc: "처음부터 2부까지 메인+이벤트를 한 줄로 이은 순서입니다. 1부는 원글 이미지 순서 그대로, 1부 이후는 원글의 메인·데카그라마톤 순서 사이에 일본 서버 공개 순서대로 이벤트를 넣었어요. '원제'가 적힌 카드는 한국어 제목 확인이 필요해요.",
     items: [
+      { group: "1부" },
       { title: "프롤로그", type: "main", imp: 3 },
       { title: "Vol.1 대책위원회 편 1장", type: "main", imp: 3 },
       { title: "Vol.1 대책위원회 편 2장", type: "main", imp: 3 },
@@ -53,8 +56,8 @@ window.ROUTES = [
       { title: "여름 하늘의 위시리스트", type: "event", imp: 1 },
       { title: "Vol.3 에덴조약 편 3장 (5화~)", type: "main", imp: 3 },
       { title: "Vol.3 에덴조약 편 4장", type: "main", imp: 3 },
-      { title: "샬레의 해피 발렌타인 순찰", type: "event", imp: 1, notes: ["난이도가 부담되면 건너뛰어도 됨"] },
       { title: "227호 온천장 운영일지!", type: "event", imp: 2 },
+      { title: "샬레의 해피 발렌타인 순찰", type: "event", imp: 1, notes: ["난이도가 부담되면 건너뛰어도 됨"] },
       { title: "코사카 와카모의 침묵과 축연", type: "event", imp: 1, notes: ["난이도가 부담되면 건너뛰어도 됨"] },
       { title: "우당탕탕 수녀님과 고서관의 마술사", type: "event", imp: 1 },
       { title: "Vol.4 카르바노그의 토끼 편 1장", type: "main", imp: 3 },
@@ -64,19 +67,12 @@ window.ROUTES = [
       { title: "달콤한 비밀과 총격전", type: "event", imp: 2 },
       { title: "ON YOUR MARK @MILLENNIUM (키보토스 황륜대제)", type: "event", imp: 2 },
       { title: "Get Set, Go! (키보토스 황륜대제)", type: "event", imp: 2 },
-      { title: "Ex. 데카그라마톤 편 1장 지혜의 뱀 (1~13화)", type: "main", imp: 2, notes: ["13화 '새로운 시작'까지만 보고 멈추기", "14화부터는 1부 이후 탭에서"] },
+      { title: "Ex. 데카그라마톤 편 1장 지혜의 뱀 (1~13화)", type: "main", imp: 2, notes: ["13화 '새로운 시작'까지만 보고 멈추기", "14화부터는 1부 완결 이후 구간에서"] },
       { title: "Vol.2 태엽감는 꽃의 파반느 편 2장", type: "main", imp: 3 },
       { title: "성당의 메리 크리스마스", type: "event", imp: 1 },
       { title: "새해의 아페리티프", type: "event", imp: 1 },
-      { title: "Final. 그리고 모든 기적이 시작되는 곳 편", type: "final", imp: 3, notes: ["여기까지가 1부입니다."] }
-    ]
-  },
-  {
-    id: "all2",
-    name: "⭐ 통합 순서 (1부 최종장 이후, 이벤트 포함)",
-    short: "⭐ 1부 이후 통합",
-    desc: "메인 순서·데카그라마톤 구간은 원글 이미지, 그 사이 이벤트는 일본 서버 공개 순서를 참고해 끼워 넣었어요. 일부 이벤트의 한국어 제목은 일본어 제목을 옮긴 것이라 인게임 표기와 다를 수 있어요(원제를 같이 적어둠). 한국 서버는 일본보다 공개가 늦어 뒤쪽은 아직 없을 수 있어요.",
-    items: [
+      { title: "Final. 그리고 모든 기적이 시작되는 곳 편", type: "final", imp: 3, notes: ["여기까지가 1부입니다."] },
+      { group: "━━ 1부 완결 · 여기부터 1부 이후 ━━" },
       { group: "최종편 후일담 무렵" },
       { title: "D.U. 시라토리구 복구작업", type: "event", imp: 1, notes: ["원제: D.U.シラトリ区 復旧作業 (한국어 제목 확인 필요)"] },
       { title: "백아의 예고장 ~허식의 저택과 미학의 소재~", type: "event", imp: 1, notes: ["원제: 白亜の予告状 (한국어 제목 확인 필요)"] },
@@ -134,7 +130,7 @@ window.ROUTES = [
       { title: "Vol.0 연방학생회 편 1장", type: "main", imp: 3, notes: ["한국어 제목·공개 여부 확인 필요"] },
       { title: "Ex. 로어 추적 편 2장", type: "main", imp: 2, notes: ["한국어 제목 확인 필요 (일본어: ロア追跡編)"] },
       { title: "2부 Vol.1 불꽃과 그림자 편 1장", type: "main", imp: 3 },
-      { title: "2부 Vol.1 불꽃과 그림자 편 2장", type: "main", imp: 3, notes: ["한국 서버 2026-11 기준 최신"] },
+      { title: "2부 Vol.1 불꽃과 그림자 편 2장", type: "main", imp: 3, notes: ["한국 서버 2026-11 기준 최신"] }
     ]
   },
   {
@@ -153,29 +149,6 @@ window.ROUTES = [
       { title: "Vol.3 에덴조약 편 4장", type: "main", imp: 3 },
       { title: "Vol.2 태엽감는 꽃의 파반느 편 2장", type: "main", imp: 3 },
       { title: "Final. 그리고 모든 기적이 시작되는 곳 편", type: "final", imp: 3, notes: ["여기까지가 1부입니다."] }
-    ]
-  },
-  {
-    id: "event1",
-    name: "② 이벤트 포함 (1부 최종장까지)",
-    short: "이벤트 1부",
-    desc: "더 깊게 파고 싶은 분께. 원글에서는 모든 이벤트를 보는 것을 권장합니다. 메인은 ① 순서대로 보면서, 아래 이벤트를 사이사이 챙겨 보세요.",
-    items: [
-      { group: "필수급 — 메인 스토리와 직결" },
-      { title: "선상의 바니 체이서", type: "event", imp: 3 },
-      { title: "불인(不忍)의 마음", type: "event", imp: 3 },
-      { group: "보는 게 좋음 — 학생들의 첫 만남 등 캐릭터 확장" },
-      { title: "벚꽃만발 축제대소동", type: "event", imp: 2 },
-      { title: "혁명의 이반 쿠팔라", type: "event", imp: 2 },
-      { title: "227호 온천장 운영일지", type: "event", imp: 2 },
-      { title: "신춘광상곡 제68번", type: "event", imp: 2 },
-      { title: "아비도스 리조트 복구대책위원회", type: "event", imp: 2 },
-      { title: "출장! 백야당 바다의 집 프랜차이즈 계획", type: "event", imp: 2 },
-      { title: "달콤한 비밀: 총격전", type: "event", imp: 2 },
-      { title: "Get Set, Go! 키보토스 황륜대제", type: "event", imp: 2 },
-      { group: "나머지 — 스토리상 필수는 아님" },
-      { title: "샬레의 해피 발렌타인 순찰", type: "event", imp: 1, notes: ["난이도가 부담되면 건너뛰어도 됨"] },
-      { title: "코사카 와카모의 침묵과 축연", type: "event", imp: 1, notes: ["난이도가 부담되면 건너뛰어도 됨"] }
     ]
   },
   {

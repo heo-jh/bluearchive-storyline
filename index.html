@@ -206,7 +206,7 @@ footer{margin-top:40px;font-size:13px;color:var(--muted);border-top:1px solid va
       </div>`;
     });
     $("timeline").innerHTML = shown ? html : `<div class="empty">조건에 맞는 스토리가 없어요.</div>`;
-    $("endMark").innerHTML = ["all1","main1","event1"].includes(routeId) ? "<b>— 1부 완결 —</b>" : "";
+    $("endMark").innerHTML = routeId === "main1" ? "<b>— 1부 완결 —</b>" : "";
 
     const real = route.items.filter(it => !it.group && it.type !== "todo");
     const cnt = real.filter(it => watched[it.title]).length;
