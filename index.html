@@ -52,28 +52,39 @@ details summary{cursor:pointer;color:var(--muted);font-size:14px}
 .chip{background:transparent;border:1px solid var(--line);color:var(--muted);border-radius:99px;padding:4px 12px;cursor:pointer;font:inherit;font-size:13px}
 .chip.on{border-color:var(--accent);color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,transparent)}
 /* timeline */
+html{scroll-behavior:smooth}
+/* jump bar */
+.jumps{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:8px;margin:0 -18px 10px;padding:8px 18px;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.jumps[hidden]{display:none}
+.jumps-label{flex:0 0 auto;font-size:12px;font-weight:700;color:var(--muted)}
+.jumps-list{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;min-width:0}
+.jumps-list::-webkit-scrollbar{display:none}
+.jump{flex:0 0 auto;padding:4px 10px;font-size:13px;font-weight:600;white-space:nowrap;color:var(--accent);text-decoration:none;background:color-mix(in srgb,var(--accent) 10%,transparent);border:1px solid color-mix(in srgb,var(--accent) 55%,transparent);border-radius:6px}
+.jump:hover{background:color-mix(in srgb,var(--accent) 22%,transparent);border-color:var(--accent)}
+.group,.divider,.anchor{scroll-margin-top:64px}
+.anchor{height:0}
 .timeline{position:relative;padding-left:26px}
 .timeline::before{content:"";position:absolute;left:9px;top:6px;bottom:6px;width:2px;background:var(--line)}
-.group{font-size:13px;font-weight:700;color:var(--accent2);margin:22px 0 8px -26px;padding-left:26px}
-.divider{position:relative;z-index:1;display:flex;align-items:center;gap:12px;margin:34px 0 26px -26px;color:var(--accent);font-weight:800;font-size:14px;white-space:nowrap}
+.group{font-size:13px;font-weight:700;color:var(--accent2);margin:18px 0 6px -26px;padding-left:26px}
+.divider{position:relative;z-index:1;display:flex;align-items:center;gap:12px;margin:28px 0 20px -26px;color:var(--accent);font-weight:800;font-size:14px;white-space:nowrap}
 .divider::before,.divider::after{content:"";flex:1;height:3px;border-radius:2px;background:var(--accent)}
 .divider span{padding:4px 12px;border:2px solid var(--accent);border-radius:999px;background:var(--bg)}
-.card{position:relative;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:10px 0;display:flex;gap:12px;align-items:flex-start;transition:opacity .2s,border-color .2s}
-.card::before{content:"";position:absolute;left:-22px;top:18px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:2px solid var(--accent)}
+.card{position:relative;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 10px;margin:6px 0;display:flex;gap:10px;align-items:center;transition:opacity .2s,border-color .2s}
+.card::before{content:"";position:absolute;left:-22px;top:50%;margin-top:-7px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:2px solid var(--accent)}
 .card.done{opacity:.55}.card.done::before{background:var(--done);border-color:var(--done)}
 .card.final{border-color:var(--accent)}
 .card.todo{border-style:dashed;background:transparent}
 .card.todo::before{border-color:var(--gray)}
 .card.flash{border-color:var(--yellow);box-shadow:0 0 0 3px color-mix(in srgb,var(--yellow) 30%,transparent)}
-.num{font-weight:800;color:var(--accent);min-width:26px;font-size:15px}
+.num{font-weight:800;color:var(--accent);min-width:22px;font-size:14px}
 .body{flex:1;min-width:0}
-.thumb{display:block;width:100%;max-width:360px;aspect-ratio:16/9;object-fit:cover;border-radius:8px;margin-bottom:8px;background:var(--bg2)}
-.ttl{font-weight:600}
-.tags{margin-top:4px;display:flex;gap:6px;flex-wrap:wrap;align-items:center;font-size:12px}
+.thumb{flex:0 0 auto;display:block;width:112px;aspect-ratio:16/9;object-fit:cover;border-radius:6px;background:var(--bg2)}
+.ttl{font-weight:600;font-size:15px;line-height:1.35}
+.tags{margin-top:3px;display:flex;gap:6px;flex-wrap:wrap;align-items:center;font-size:12px;line-height:1.4}
 .t-main{background:#2a5bd7;color:#fff}.t-event{background:#8a4bd6;color:#fff}.t-final{background:var(--accent);color:#fff}.t-todo{background:var(--gray);color:#fff}
 .stars{font-size:13px;letter-spacing:1px}
-.notes{margin:6px 0 0;padding-left:16px;font-size:13px;color:var(--muted)}
-.chk{appearance:none;width:22px;height:22px;border:2px solid var(--line);border-radius:6px;cursor:pointer;flex:0 0 auto;margin-top:2px;display:grid;place-content:center}
+.notes{margin:3px 0 0;padding-left:16px;font-size:12.5px;line-height:1.45;color:var(--muted)}
+.chk{appearance:none;width:22px;height:22px;border:2px solid var(--line);border-radius:6px;cursor:pointer;flex:0 0 auto;display:grid;place-content:center}
 .chk:checked{background:var(--done);border-color:var(--done)}
 .chk:checked::after{content:"✓";color:#fff;font-size:14px;font-weight:700}
 .end{text-align:center;color:var(--muted);margin:26px 0 0;font-size:14px}
@@ -82,7 +93,7 @@ details summary{cursor:pointer;color:var(--muted);font-size:14px}
 .refs a{display:block;padding:8px 0;border-bottom:1px solid var(--line);text-decoration:none}
 .refs a:last-child{border:none}
 footer{margin-top:40px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
-@media (max-width:600px){.theme-btn{top:16px}header{padding-top:56px}}
+@media (max-width:600px){.theme-btn{top:16px}header{padding-top:56px}.thumb{width:84px}.num{min-width:18px;font-size:13px}.card{gap:8px}.ttl{font-size:14px}}
 </style>
 </head>
 <body>
@@ -119,6 +130,7 @@ footer{margin-top:40px;font-size:13px;color:var(--muted);border-top:1px solid va
       <button class="btn" id="resetBtn">초기화</button>
     </div>
     <div class="filters" id="filters"></div>
+    <nav class="jumps" id="jumps" aria-label="바로가기" hidden><span class="jumps-label">바로가기</span><div class="jumps-list" id="jumpList"></div></nav>
     <div class="timeline" id="timeline"></div>
     <p class="end" id="endMark"></p>
   </section>
@@ -191,19 +203,25 @@ footer{margin-top:40px;font-size:13px;color:var(--muted);border-top:1px solid va
     $("routeDesc").textContent = route.name + " — " + route.desc;
 
     let n = 0, html = "", pending = [], shown = 0;
+    const jumps = [];
+    const jumpAttr = (it, i) => it.jump ? ` id="j-${i}"` : "";
     route.items.forEach((it, i) => {
-      if (it.divider) { pending.push(`<div class="divider"><span>${it.divider}</span></div>`); return; }
-      if (it.group) { pending = pending.filter(h => !h.startsWith('<div class="group">')); pending.push(`<div class="group">${it.group}</div>`); return; }
+      if (it.divider) { pending.push({ html: `<div class="divider"${jumpAttr(it, i)}><span>${it.divider}</span></div>`, it, i }); return; }
+      if (it.group) { pending = pending.filter(p => !p.it.group); pending.push({ html: `<div class="group"${jumpAttr(it, i)}>${it.group}</div>`, it, i }); return; }
+      if (it.anchor) { pending.push({ html: `<div class="anchor" id="j-${i}"></div>`, it: { jump: it.anchor }, i }); return; }
       if (it.type !== "todo") n++;
       if (!pass(it)) return;
-      if (pending.length) { html += pending.join(""); pending = []; }
+      if (pending.length) {
+        pending.forEach(p => { html += p.html; if (p.it.jump) jumps.push(`<a class="jump" href="#j-${p.i}">${p.it.jump}</a>`); });
+        pending = [];
+      }
       shown++;
       const done = !!watched[it.title];
       const notes = it.notes ? `<ul class="notes">${it.notes.map(x=>`<li>${x}</li>`).join("")}</ul>` : "";
       html += `<div class="card ${it.type} ${done?"done":""}" id="c-${i}">
         ${it.type === "todo" ? `<span class="num">…</span>` : `<span class="num">${String(n).padStart(2,"0")}</span>`}
+        ${it.img ? `<img class="thumb" src="${it.img}" alt="" loading="lazy" onerror="this.remove()">` : ""}
         <div class="body">
-          ${it.img ? `<img class="thumb" src="${it.img}" alt="" loading="lazy" onerror="this.remove()">` : ""}
           <div class="ttl">${it.title}</div>
           <div class="tags"><span class="tag t-${it.type}">${typeLabel[it.type]}</span>${stars(it.imp)}</div>
           ${notes}
@@ -212,6 +230,8 @@ footer{margin-top:40px;font-size:13px;color:var(--muted);border-top:1px solid va
       </div>`;
     });
     $("timeline").innerHTML = shown ? html : `<div class="empty">조건에 맞는 스토리가 없어요.</div>`;
+    $("jumpList").innerHTML = jumps.join("");
+    $("jumps").hidden = jumps.length < 2;
     $("endMark").innerHTML = routeId === "main1" ? "<b>— 1부 완결 —</b>" : "";
 
     const real = route.items.filter(it => it.title && it.type !== "todo");
