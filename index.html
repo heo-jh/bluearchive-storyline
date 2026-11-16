@@ -79,6 +79,8 @@ html{scroll-behavior:smooth}
 .card.flash{border-color:var(--yellow);box-shadow:0 0 0 3px color-mix(in srgb,var(--yellow) 30%,transparent)}
 .num{font-weight:800;color:var(--accent);min-width:22px;font-size:14px}
 .body{flex:1;min-width:0}
+.thumb.logo{display:grid;place-items:center;background:linear-gradient(135deg,#eef8ff,#bfe2fb);border:1px solid color-mix(in srgb,#7fc4f5 40%,transparent)}
+.thumb.logo img{max-width:90%;max-height:82%;object-fit:contain}
 .thumb{flex:0 0 auto;display:block;width:112px;aspect-ratio:16/9;object-fit:cover;border-radius:6px;background:var(--bg2)}
 .ttl{font-weight:600;font-size:15px;line-height:1.35}
 .tags{margin-top:3px;display:flex;gap:6px;flex-wrap:wrap;align-items:center;font-size:12px;line-height:1.4}
@@ -100,6 +102,14 @@ html{scroll-behavior:smooth}
 .end{text-align:center;color:var(--muted);margin:26px 0 0;font-size:14px}
 .end b{color:var(--accent)}
 .empty{color:var(--muted);text-align:center;padding:20px}
+.extras{display:grid;grid-template-columns:1fr;gap:10px;align-items:start}
+@media (min-width:700px){.extras{grid-template-columns:1fr 1fr}}
+.xcard{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.xhead{display:flex;gap:12px;align-items:center}
+.xhead .thumb{width:96px}
+.xbadge{display:inline-block;font-size:11px;font-weight:700;padding:1px 8px;border-radius:4px;border:1px solid var(--accent);color:var(--accent);margin-bottom:4px}
+.xbadge.no{border-color:var(--gray);color:var(--muted)}
+.xcard .notes{margin-top:8px}
 .refs a{display:block;padding:8px 0;border-bottom:1px solid var(--line);text-decoration:none}
 .refs a:last-child{border:none}
 footer{margin-top:40px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
@@ -143,6 +153,12 @@ footer{margin-top:40px;font-size:13px;color:var(--muted);border-top:1px solid va
     <nav class="jumps" id="jumps" aria-label="바로가기" hidden><span class="jumps-label">바로가기</span><div class="jumps-list" id="jumpList"></div></nav>
     <div class="timeline" id="timeline"></div>
     <p class="end" id="endMark"></p>
+  </section>
+
+  <section id="extrasSec" hidden>
+    <h2 id="extrasTitle"></h2>
+    <p class="route-desc" id="extrasDesc"></p>
+    <div class="extras" id="extras"></div>
   </section>
 
   <section>
@@ -219,6 +235,9 @@ footer{margin-top:40px;font-size:13px;color:var(--muted);border-top:1px solid va
   $("tabs").innerHTML = R.map(r => `<button class="tab" data-r="${r.id}">${r.short}</button>`).join("");
   $("tabs").onclick = e => { const r = e.target.dataset.r; if (!r) return; routeId = r; store.set("ba-route", r); render(); };
 
+  const thumb = it => !it.img ? "" : it.logo
+    ? `<span class="thumb logo"><img src="${it.img}" alt="" loading="lazy" onerror="this.parentNode.remove()"></span>`
+    : `<img class="thumb" src="${it.img}" alt="" loading="lazy" onerror="this.remove()">`;
   const typeLabel = { main:"메인", event:"이벤트", final:"최종편", todo:"작성 필요" };
   const stars = n => n ? `<span class="stars s${n}">${"★".repeat(n)}</span>` : "";
   const pass = it => {
@@ -253,7 +272,7 @@ footer{margin-top:40px;font-size:13px;color:var(--muted);border-top:1px solid va
       const notes = it.notes ? `<ul class="notes">${it.notes.map(x=>`<li>${x}</li>`).join("")}</ul>` : "";
       html += `<div class="card ${it.type} ${done?"done":""}" id="c-${i}">
         ${it.type === "todo" ? `<span class="num">…</span>` : `<span class="num">${String(n).padStart(2,"0")}</span>`}
-        ${it.img ? `<img class="thumb" src="${it.img}" alt="" loading="lazy" onerror="this.remove()">` : ""}
+        ${thumb(it)}
         <div class="body">
           <div class="ttl">${it.title}</div>
           <div class="tags"><span class="tag t-${it.type}">${typeLabel[it.type]}</span>${stars(it.imp)}${it.noReplay ? `<span class="tag t-noreplay" title="게임 안 스토리 다시보기 메뉴에 없음">다시보기 미수록</span>` : ""}</div>
@@ -285,6 +304,22 @@ footer{margin-top:40px;font-size:13px;color:var(--muted);border-top:1px solid va
     if (e.target.checked) watched[t] = true; else delete watched[t];
     store.set("ba-watched", watched); render();
   });
+
+  // 원글 순서에 없는 이벤트 (맨 아래)
+  const X = window.EXTRAS;
+  if (X && X.items && X.items.length) {
+    $("extrasSec").hidden = false;
+    $("extrasTitle").textContent = X.title;
+    $("extrasDesc").textContent = X.desc;
+    $("extras").innerHTML = X.items.map((it, i) => `<div class="xcard">
+      <div class="xhead">
+        ${thumb(it)}
+        <div><span class="xbadge${it.replay ? "" : " no"}">다시보기 ${it.replay ? "O" : "X"}</span><div class="ttl">${it.title}</div></div>
+      </div>
+      ${it.notes ? `<ul class="notes">${it.notes.map(x => `<li>${x}</li>`).join("")}</ul>` : ""}
+      ${epHtml(it, "extra:" + i)}
+    </div>`).join("");
+  }
 
   $("continueBtn").onclick = () => {
     if (filter !== "all") { filter = "all"; render(); }
