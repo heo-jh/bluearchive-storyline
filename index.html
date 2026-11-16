@@ -55,6 +55,9 @@ details summary{cursor:pointer;color:var(--muted);font-size:14px}
 .timeline{position:relative;padding-left:26px}
 .timeline::before{content:"";position:absolute;left:9px;top:6px;bottom:6px;width:2px;background:var(--line)}
 .group{font-size:13px;font-weight:700;color:var(--accent2);margin:22px 0 8px -26px;padding-left:26px}
+.divider{position:relative;z-index:1;display:flex;align-items:center;gap:12px;margin:34px 0 26px -26px;color:var(--accent);font-weight:800;font-size:14px;white-space:nowrap}
+.divider::before,.divider::after{content:"";flex:1;height:3px;border-radius:2px;background:var(--accent)}
+.divider span{padding:4px 12px;border:2px solid var(--accent);border-radius:999px;background:var(--bg)}
 .card{position:relative;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:10px 0;display:flex;gap:12px;align-items:flex-start;transition:opacity .2s,border-color .2s}
 .card::before{content:"";position:absolute;left:-22px;top:18px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:2px solid var(--accent)}
 .card.done{opacity:.55}.card.done::before{background:var(--done);border-color:var(--done)}
@@ -187,12 +190,13 @@ footer{margin-top:40px;font-size:13px;color:var(--muted);border-top:1px solid va
     document.querySelectorAll(".chip").forEach(b => b.classList.toggle("on", b.dataset.f === filter));
     $("routeDesc").textContent = route.name + " — " + route.desc;
 
-    let n = 0, html = "", pendingGroup = null, shown = 0;
+    let n = 0, html = "", pending = [], shown = 0;
     route.items.forEach((it, i) => {
-      if (it.group) { pendingGroup = it.group; return; }
+      if (it.divider) { pending.push(`<div class="divider"><span>${it.divider}</span></div>`); return; }
+      if (it.group) { pending = pending.filter(h => !h.startsWith('<div class="group">')); pending.push(`<div class="group">${it.group}</div>`); return; }
       if (it.type !== "todo") n++;
       if (!pass(it)) return;
-      if (pendingGroup) { html += `<div class="group">${pendingGroup}</div>`; pendingGroup = null; }
+      if (pending.length) { html += pending.join(""); pending = []; }
       shown++;
       const done = !!watched[it.title];
       const notes = it.notes ? `<ul class="notes">${it.notes.map(x=>`<li>${x}</li>`).join("")}</ul>` : "";
@@ -210,7 +214,7 @@ footer{margin-top:40px;font-size:13px;color:var(--muted);border-top:1px solid va
     $("timeline").innerHTML = shown ? html : `<div class="empty">조건에 맞는 스토리가 없어요.</div>`;
     $("endMark").innerHTML = routeId === "main1" ? "<b>— 1부 완결 —</b>" : "";
 
-    const real = route.items.filter(it => !it.group && it.type !== "todo");
+    const real = route.items.filter(it => it.title && it.type !== "todo");
     const cnt = real.filter(it => watched[it.title]).length;
     $("barFill").style.width = (real.length ? cnt / real.length * 100 : 0) + "%";
     $("progText").textContent = `${cnt} / ${real.length} 감상`;
@@ -226,7 +230,7 @@ footer{margin-top:40px;font-size:13px;color:var(--muted);border-top:1px solid va
   $("continueBtn").onclick = () => {
     if (filter !== "all") { filter = "all"; render(); }
     const route = R.find(r => r.id === routeId);
-    const idx = route.items.findIndex(it => !it.group && it.type !== "todo" && !watched[it.title]);
+    const idx = route.items.findIndex(it => it.title && it.type !== "todo" && !watched[it.title]);
     if (idx < 0) { alertless("이 루트는 모두 감상했어요! 🎉"); return; }
     const el = $("c-" + idx); el.scrollIntoView({behavior:"smooth", block:"center"});
     el.classList.add("flash"); setTimeout(() => el.classList.remove("flash"), 1500);
