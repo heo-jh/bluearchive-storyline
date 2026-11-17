@@ -397,7 +397,9 @@ footer{margin-top:40px;font-size:13px;color:var(--muted);border-top:1px solid va
   $("timeline").addEventListener("change", e => {
     if (!e.target.classList.contains("chk")) return;
     const t = decodeURIComponent(e.target.dataset.t);
-    if (e.target.checked) watched[t] = true; else delete watched[t];
+    // 다 보고 체크하면 그 카드의 '여기까지' 북마크는 지움
+    if (e.target.checked) { watched[t] = true; if (epMark[t]) { delete epMark[t]; store.set("ba-epmark", epMark); } }
+    else delete watched[t];
     store.set("ba-watched", watched); render();
   });
 
